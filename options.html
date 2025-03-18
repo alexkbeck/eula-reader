@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TermWise Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --md-sys-color-primary: #1976d2;
+      --md-sys-color-primary-container: #e3f2fd;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-on-primary-container: #0d47a1;
+      --md-sys-color-surface: #f8f7fa;
+      --md-sys-color-surface-container: #e6e6e6;
+      --md-sys-color-surface-container-high: #e0e0e0;
+      --md-sys-color-on-surface: #1d1b20;
+      --md-sys-color-on-surface-variant: #49454e;
+      --md-sys-color-outline: #79747e;
+      --md-elevation-level-1: 0 1px 2px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+      --md-elevation-level-2: 0 2px 4px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.06);
+      
+      --container-padding: 16px;
+      --border-radius-large: 16px;
+      --border-radius-medium: 12px;
+      --border-radius-small: 8px;
+    }
+
+    body {
+      font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: var(--border-radius-medium);
+      box-shadow: var(--md-elevation-level-1);
+      padding: 24px;
+    }
+
+    h1 {
+      color: var(--md-sys-color-primary);
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--md-sys-color-on-surface);
+      margin-top: 24px;
+      margin-bottom: 16px;
+      font-weight: 500;
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--md-sys-color-outline);
+      padding-bottom: 8px;
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .option-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .option-row:last-child {
+      border-bottom: none;
+    }
+
+    .option-label {
+      flex: 1;
+    }
+
+    .option-label h3 {
+      margin: 0 0 8px 0;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    .option-label p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .option-control {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .preset-section {
+      background-color: var(--md-sys-color-primary-container);
+      padding: 16px;
+      border-radius: var(--border-radius-small);
+      margin-bottom: 24px;
+    }
+
+    .preset-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .preset-btn {
+      background-color: var(--md-sys-color-on-primary-container);
+      color: var(--md-sys-color-primary-container);
+      border: none;
+      border-radius: var(--border-radius-small);
+      padding: 8px 16px;
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .preset-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .preset-btn.active {
+      outline: 2px solid var(--md-sys-color-primary);
+      outline-offset: 2px;
+    }
+
+    input[type="range"] {
+      width: 200px;
+      margin-left: 16px;
+    }
+
+    input[type="number"] {
+      width: 70px;
+      text-align: center;
+      padding: 8px;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: var(--border-radius-small);
+      font-family: 'Ubuntu', sans-serif;
+      margin-left: 16px;
+    }
+
+    select {
+      padding: 8px;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: var(--border-radius-small);
+      font-family: 'Ubuntu', sans-serif;
+      margin-left: 16px;
+      min-width: 200px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--md-sys-color-outline);
+      border-radius: var(--border-radius-small);
+      font-family: 'Ubuntu', sans-serif;
+      margin-left: 16px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    button#save {
+      background-color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border: none;
+      border-radius: var(--border-radius-small);
+      padding: 10px 24px;
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button#save:hover {
+      background-color: #1565c0;
+    }
+
+    .tooltip {
+      display: inline-block;
+      position: relative;
+      margin-left: 8px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--md-sys-color-outline);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 16px;
+      font-size: 12px;
+      cursor: help;
+    }
+
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0,0,0,0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 1;
+      width: max-content;
+      max-width: 250px;
+    }
+
+    .tooltip:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .status-message {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--border-radius-small);
+      box-shadow: var(--md-elevation-level-2);
+      animation: fadeOut 3s forwards;
+      font-weight: 500;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TermWise Generation Settings</h1>
+    
+    <div class="preset-section">
+      <h2 style="margin-top: 0; border-bottom: none;">Response Style Presets</h2>
+      <p>Choose a preset style for the AI responses or customize individual parameters below.</p>
+      <div class="preset-buttons">
+        <button class="preset-btn" data-preset="balanced">Balanced (Default)</button>
+        <button class="preset-btn" data-preset="creative">Creative</button>
+        <button class="preset-btn" data-preset="precise">By the Book</button>
+        <button class="preset-btn" data-preset="concise">Concise</button>
+        <button class="preset-btn" data-preset="detailed">Detailed</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Response Content</h2>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Temperature <span class="tooltip" data-tooltip="Controls randomness: higher values produce more creative responses">?</span></h3>
+          <p>Lower values = more predictable, higher values = more creative</p>
+        </div>
+        <div class="option-control">
+          <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7">
+          <span id="temperature-value">0.7</span>
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Top P <span class="tooltip" data-tooltip="Controls diversity via nucleus sampling: considers tokens with this probability mass">?</span></h3>
+          <p>Lower values = more focused, higher values = more diverse</p>
+        </div>
+        <div class="option-control">
+          <input type="range" id="topP" min="0" max="1" step="0.1" value="0.8">
+          <span id="topP-value">0.8</span>
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Top K <span class="tooltip" data-tooltip="Limits token selection to the top K most probable tokens">?</span></h3>
+          <p>Number of highest probability vocabulary tokens to keep</p>
+        </div>
+        <div class="option-control">
+          <input type="number" id="topK" min="1" max="40" value="40">
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Maximum Output Length <span class="tooltip" data-tooltip="The maximum number of tokens to generate in the response">?</span></h3>
+          <p>Maximum number of tokens in the response</p>
+        </div>
+        <div class="option-control">
+          <input type="number" id="maxOutputTokens" min="1" max="2048" value="1024">
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Advanced Options</h2>
+      
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Presence Penalty <span class="tooltip" data-tooltip="Penalizes tokens already present in the generated text">?</span></h3>
+          <p>Reduces repetition of tokens present in the text</p>
+        </div>
+        <div class="option-control">
+          <input type="range" id="presencePenalty" min="0" max="1" step="0.1" value="0">
+          <span id="presencePenalty-value">0</span>
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Frequency Penalty <span class="tooltip" data-tooltip="Penalizes token frequency in the generated text">?</span></h3>
+          <p>Reduces repetition of frequent tokens</p>
+        </div>
+        <div class="option-control">
+          <input type="range" id="frequencyPenalty" min="0" max="1" step="0.1" value="0">
+          <span id="frequencyPenalty-value">0</span>
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Stop Sequences <span class="tooltip" data-tooltip="Stops generation when these sequences are encountered">?</span></h3>
+          <p>Comma-separated list of sequences where generation should stop</p>
+        </div>
+        <div class="option-control">
+          <input type="text" id="stopSequences" placeholder="e.g., END,STOP,FINISH">
+        </div>
+      </div>
+
+      <div class="option-row">
+        <div class="option-label">
+          <h3>Response Mode <span class="tooltip" data-tooltip="Specifies the response format if supported">?</span></h3>
+          <p>The format of the generated response</p>
+        </div>
+        <div class="option-control">
+          <select id="responseType">
+            <option value="">Default</option>
+            <option value="JSON">JSON</option>
+            <option value="MARKDOWN">Markdown</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button id="save">Save Settings</button>
+    </div>
+  </div>
+
+  <div id="status-message" class="status-message">Settings saved!</div>
+
+  <script src="options.js"></script>
+</body>
+</html> 

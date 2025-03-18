@@ -1,0 +1,17 @@
+{
+  "name": "eula-reader",
+  "version": "1.0.0",
+  "description": "Chrome extension for AI-powered EULA and Terms of Service analysis",
+  "scripts": {
+    "test": "playwright test",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "jest-fetch-mock": "^3.0.3",
+    "dotenv": "^16.4.5"
+  },
+  "author": "",
+  "license": "MIT"
+} 

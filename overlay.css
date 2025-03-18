@@ -1,0 +1,196 @@
+/* Overlay styles for EULA Reader */
+
+.eula-reader-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2147483647; /* Maximum z-index to ensure it's on top */
+  overflow: hidden;
+  font-family: 'Ubuntu', 'Roboto', sans-serif;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.eula-reader-overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background-color: #1976d2;
+  color: white;
+  cursor: move;
+}
+
+.eula-reader-overlay-title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.eula-reader-overlay-title-icon {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+}
+
+.eula-reader-overlay-content {
+  padding: 16px;
+}
+
+.eula-reader-overlay-message {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333;
+}
+
+.eula-reader-overlay-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.eula-reader-overlay-action-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.eula-reader-overlay-primary-button {
+  background-color: #1976d2;
+  color: white;
+}
+
+.eula-reader-overlay-primary-button:hover {
+  background-color: #1565c0;
+}
+
+.eula-reader-overlay-secondary-button {
+  background-color: transparent;
+  color: #1976d2;
+}
+
+.eula-reader-overlay-secondary-button:hover {
+  background-color: rgba(25, 118, 210, 0.1);
+}
+
+/* Animation for the overlay appearance */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.eula-reader-overlay-animate-in {
+  animation: slideIn 0.3s forwards;
+}
+
+/* Overlay styles for TermWise */
+
+.termwise-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2147483647; /* Maximum z-index to ensure it's on top */
+  overflow: hidden;
+  font-family: 'Ubuntu', 'Roboto', sans-serif;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.termwise-overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background-color: #1976d2;
+  color: white;
+  cursor: move;
+  user-select: none;
+}
+
+.termwise-overlay-title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.termwise-overlay-title-icon {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+}
+
+.termwise-overlay-content {
+  padding: 16px;
+}
+
+.termwise-overlay-message {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.termwise-overlay-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.termwise-overlay-action-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.termwise-overlay-action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.termwise-overlay-primary-button {
+  background-color: #1976d2;
+  color: white;
+}
+
+.termwise-overlay-primary-button:hover:not(:disabled) {
+  background-color: #1565c0;
+}
+
+.termwise-overlay-secondary-button {
+  background-color: transparent;
+  color: #1976d2;
+}
+
+.termwise-overlay-secondary-button:hover:not(:disabled) {
+  background-color: rgba(25, 118, 210, 0.1);
+}
+
+.termwise-overlay-animate-in {
+  animation: slideIn 0.3s forwards;
+} 

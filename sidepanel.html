@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TermWise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="lib/github.min.css">
+  <script src="lib/markdown-it.min.js"></script>
+  <script src="lib/highlight.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div id="initial-state" class="content-section">
+      <div class="empty-state">
+        <p>Click the extension icon when viewing a Terms & Conditions or EULA page to analyze and summarize it.</p>
+      </div>
+    </div>
+
+    <div id="loading-state" class="content-section hidden">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Analyzing document...</p>
+      </div>
+    </div>
+
+    <div id="summary-state" class="content-section hidden">
+      <div class="main-content">
+        <div id="chat-messages" class="chat-messages">
+          <div class="summary-box">
+            <div id="summary-content" class="summary-content markdown-content"></div>
+          </div>
+          
+          <div class="action-buttons">
+            <button class="action-btn" data-prompt="As my lawyer, explain the most concerning terms in this agreement">
+              <span class="material-icons icon-zoom-in">zoom_in</span>
+              More detail
+            </button>
+            <button class="action-btn" data-prompt="Compare this agreement to typical industry standards - is it notably unfair?">
+              <span class="material-icons icon-balance">balance</span>
+              Is it fair?
+            </button>
+            <button class="action-btn" data-prompt="List specifically what legal rights I'm surrendering by accepting this agreement">
+              <span class="material-icons icon-gavel">gavel</span>
+              Rights concerns
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="input-container">
+        <div class="chat-input">
+          <input type="text" id="user-question" placeholder="Ask about specific sections or concerns...">
+          <button id="send-button" class="send-button" aria-label="Send message">
+            <span class="material-icons icon-send">send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="sidepanel.js"></script>
+</body>
+</html> 
