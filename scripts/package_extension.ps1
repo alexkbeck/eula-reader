@@ -6,6 +6,17 @@ $ErrorActionPreference = "Stop"
 
 Write-Host "[*] Starting TermWise extension packaging..." -ForegroundColor Blue
 
+# Get version from package.json
+try {
+    $packageJson = Get-Content "package.json" -Raw | ConvertFrom-Json
+    $version = $packageJson.version
+    Write-Host "[+] Using version: $version" -ForegroundColor Green
+} catch {
+    Write-Host "[!] Error reading package.json:" -ForegroundColor Red
+    Write-Host $_.Exception.Message
+    exit 1
+}
+
 # Required files and directories
 $requiredFiles = @(
     "manifest.json",
@@ -46,9 +57,32 @@ $excludePatterns = @(
     "*.zip"
 )
 
-# Create timestamp for ZIP file name
+# Create builds directory if it doesn't exist
+$buildsDir = "builds"
+if (-not (Test-Path $buildsDir -PathType Container)) {
+    New-Item -ItemType Directory -Path $buildsDir | Out-Null
+    Write-Host "[+] Created builds directory" -ForegroundColor Green
+}
+
+# Clean builds directory (keep last 5 builds)
+Write-Host "[*] Cleaning builds directory..." -ForegroundColor Yellow
+try {
+    $buildFiles = Get-ChildItem -Path $buildsDir -Filter "TermWise_*.zip" | Sort-Object LastWriteTime -Descending
+    if ($buildFiles.Count -gt 5) {
+        $buildFiles | Select-Object -Skip 5 | ForEach-Object {
+            Remove-Item $_.FullName -Force
+            Write-Host "   Removed old build: $($_.Name)" -ForegroundColor Gray
+        }
+    }
+} catch {
+    Write-Host "[!] Warning: Could not clean builds directory:" -ForegroundColor Yellow
+    Write-Host $_.Exception.Message
+}
+
+# Create timestamp for unique identification
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$zipName = "TermWise_$timestamp.zip"
+$zipName = "TermWise_v${version}_${timestamp}.zip"
+$zipPath = Join-Path $buildsDir $zipName
 
 # Function to clean up temporary directory
 function Cleanup-TempDir {
@@ -104,6 +138,12 @@ try {
         exit 1
     }
 
+    # Verify manifest version matches package.json
+    if ($manifest.version -ne $version) {
+        Write-Host "[!] Error: manifest.json version ($($manifest.version)) does not match package.json version ($version)" -ForegroundColor Red
+        exit 1
+    }
+
     # Verify manifest version is 3
     if ($manifest.manifest_version -ne 3) {
         Write-Host "[!] Error: manifest_version must be 3" -ForegroundColor Red
@@ -138,16 +178,16 @@ try {
     # Create the ZIP file
     Write-Host "[*] Creating ZIP file..." -ForegroundColor Yellow
     
-    if (Test-Path $zipName) {
-        Remove-Item $zipName -Force
+    if (Test-Path $zipPath) {
+        Remove-Item $zipPath -Force
     }
     
     Add-Type -AssemblyName System.IO.Compression.FileSystem
-    [System.IO.Compression.ZipFile]::CreateFromDirectory($tempDir, $zipName)
+    [System.IO.Compression.ZipFile]::CreateFromDirectory($tempDir, $zipPath)
 
     # Verify ZIP file was created and has content
-    if (Test-Path $zipName) {
-        $zipSize = (Get-Item $zipName).Length
+    if (Test-Path $zipPath) {
+        $zipSize = (Get-Item $zipPath).Length
         if ($zipSize -gt 0) {
             Write-Host "[+] Successfully created $zipName ($([math]::Round($zipSize/1KB, 2)) KB)" -ForegroundColor Green
         } else {
@@ -158,7 +198,7 @@ try {
     }
 
     Write-Host "`n[*] Next steps:" -ForegroundColor Cyan
-    Write-Host "1. Verify the contents of $zipName" -ForegroundColor Cyan
+    Write-Host "1. Verify the contents of $zipName in the builds directory" -ForegroundColor Cyan
     Write-Host "2. Upload to Chrome Web Store Developer Dashboard" -ForegroundColor Cyan
     Write-Host "3. Complete store listing information" -ForegroundColor Cyan
     Write-Host "`nFor detailed instructions, refer to CHROME_STORE_SUBMISSION_GUIDE.md" -ForegroundColor Cyan

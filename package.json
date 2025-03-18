@@ -12,6 +12,11 @@
     "jest-fetch-mock": "^3.0.3",
     "dotenv": "^16.4.5"
   },
+  "dependencies": {
+    "markdown-it": "^13.0.2",
+    "highlight.js": "^11.9.0",
+    "github-markdown-css": "^5.5.1"
+  },
   "author": "",
   "license": "MIT"
 } 
